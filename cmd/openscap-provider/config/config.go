@@ -14,14 +14,11 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/complytime/complyctl/pkg/provider"
 	"github.com/hashicorp/go-hclog"
 )
 
 const (
-	// workspaceDir is the workspace-local directory used by complyctl for all artifacts.
-	// Matches complyctl's internal/complytime.WorkspaceDir constant.
-	workspaceDir string = ".complytime"
-
 	ProviderDir    string = "openscap"
 	PolicyDir      string = "policy"
 	ResultsDir     string = "results"
@@ -33,24 +30,19 @@ const (
 // Resolved convention-based file paths. These are constants — the provider
 // always reads/writes to these locations under the workspace directory.
 var (
-	PolicyPath  = filepath.Join(workspaceDir, ProviderDir, PolicyDir, "tailoring.xml")
-	ResultsPath = filepath.Join(workspaceDir, ProviderDir, ResultsDir, "results.xml")
-	ARFPath     = filepath.Join(workspaceDir, ProviderDir, ResultsDir, "arf.xml")
+	PolicyPath  = filepath.Join(provider.WorkspaceDir, ProviderDir, PolicyDir, "tailoring.xml")
+	ResultsPath = filepath.Join(provider.WorkspaceDir, ProviderDir, ResultsDir, "results.xml")
+	ARFPath     = filepath.Join(provider.WorkspaceDir, ProviderDir, ResultsDir, "arf.xml")
 )
-
-// WorkspaceDir returns the workspace-local directory used by complyctl for all artifacts.
-func WorkspaceDir() string {
-	return workspaceDir
-}
 
 // EnsureDirectories creates the provider workspace directory structure.
 // Called during Generate to guarantee paths exist before writing artifacts.
 func EnsureDirectories() error {
 	directories := []string{
-		filepath.Join(workspaceDir, ProviderDir),
-		filepath.Join(workspaceDir, ProviderDir, PolicyDir),
-		filepath.Join(workspaceDir, ProviderDir, ResultsDir),
-		filepath.Join(workspaceDir, ProviderDir, RemediationDir),
+		filepath.Join(provider.WorkspaceDir, ProviderDir),
+		filepath.Join(provider.WorkspaceDir, ProviderDir, PolicyDir),
+		filepath.Join(provider.WorkspaceDir, ProviderDir, ResultsDir),
+		filepath.Join(provider.WorkspaceDir, ProviderDir, RemediationDir),
 	}
 	for _, dir := range directories {
 		if err := ensureDirectory(dir); err != nil {

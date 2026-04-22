@@ -91,7 +91,7 @@ func executeGeneration(ctx context.Context, configurations []provider.Assessment
 	}
 
 	hclog.Default().Info("Generating remediation files")
-	providerDir := filepath.Join(config.WorkspaceDir(), config.ProviderDir)
+	providerDir := filepath.Join(provider.WorkspaceDir, config.ProviderDir)
 	if err := oscap.OscapGenerateFix(ctx, providerDir, profile, config.PolicyPath, datastream); err != nil {
 		return fmt.Errorf("remediation generation failed: %w", err)
 	}

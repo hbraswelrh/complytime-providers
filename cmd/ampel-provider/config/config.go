@@ -6,14 +6,11 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/complytime/complyctl/pkg/provider"
 	"github.com/hashicorp/go-hclog"
 )
 
 const (
-	// workspaceDir is the workspace-local directory used by complyctl for all artifacts.
-	// Matches complyctl's internal/complytime.WorkspaceDir constant.
-	workspaceDir = ".complytime"
-
 	// ProviderDir is the subdirectory name for ampel artifacts within the workspace.
 	ProviderDir = "ampel"
 	// DefaultGranularPolicyDir is the default directory name for granular AMPEL policy source files.
@@ -32,14 +29,9 @@ func NewConfig() *Config {
 	return &Config{}
 }
 
-// WorkspaceDir returns the workspace-local directory used by complyctl for all artifacts.
-func WorkspaceDir() string {
-	return workspaceDir
-}
-
 // ampelDir returns the path to the ampel subdirectory within the workspace.
 func ampelDir() string {
-	return filepath.Join(workspaceDir, ProviderDir)
+	return filepath.Join(provider.WorkspaceDir, ProviderDir)
 }
 
 // EnsureDirectories creates the workspace directory structure required by the provider.

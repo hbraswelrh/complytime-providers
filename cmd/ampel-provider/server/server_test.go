@@ -10,11 +10,11 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"github.com/complytime/complyctl/pkg/provider"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/config"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/convert"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/scan"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/toolcheck"
-	"github.com/complytime/complyctl/pkg/provider"
 )
 
 func TestMain(m *testing.M) {
@@ -168,7 +168,7 @@ func TestGenerate_ValidConfiguration(t *testing.T) {
 	require.True(t, resp.Success)
 	require.Empty(t, resp.ErrorMessage)
 
-	outputPath := filepath.Join(dir, config.WorkspaceDir(), config.ProviderDir, config.GeneratedPolicyDir, convert.PolicyFileName)
+	outputPath := filepath.Join(dir, provider.WorkspaceDir, config.ProviderDir, config.GeneratedPolicyDir, convert.PolicyFileName)
 	data, err := os.ReadFile(outputPath)
 	require.NoError(t, err)
 	require.Contains(t, string(data), "BP-1.01")
@@ -196,7 +196,7 @@ func TestGenerate_NoMatchingPolicies(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, resp.Success, "should succeed with no matches (no error)")
 
-	outputPath := filepath.Join(dir, config.WorkspaceDir(), config.ProviderDir, config.GeneratedPolicyDir, convert.PolicyFileName)
+	outputPath := filepath.Join(dir, provider.WorkspaceDir, config.ProviderDir, config.GeneratedPolicyDir, convert.PolicyFileName)
 	_, err = os.Stat(outputPath)
 	require.True(t, os.IsNotExist(err), "no policy file should be created when no rules match")
 }
@@ -221,7 +221,7 @@ func TestGenerate_OverwritesExistingPolicy(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, resp2.Success)
 
-	outputPath := filepath.Join(dir, config.WorkspaceDir(), config.ProviderDir, config.GeneratedPolicyDir, convert.PolicyFileName)
+	outputPath := filepath.Join(dir, provider.WorkspaceDir, config.ProviderDir, config.GeneratedPolicyDir, convert.PolicyFileName)
 	data, err := os.ReadFile(outputPath)
 	require.NoError(t, err)
 	require.Contains(t, string(data), "BP-3.01")
@@ -242,7 +242,7 @@ func TestGenerate_CustomPolicyDir(t *testing.T) {
 	require.True(t, resp.Success)
 	require.Empty(t, resp.ErrorMessage)
 
-	outputPath := filepath.Join(dir, config.WorkspaceDir(), config.ProviderDir, config.GeneratedPolicyDir, convert.PolicyFileName)
+	outputPath := filepath.Join(dir, provider.WorkspaceDir, config.ProviderDir, config.GeneratedPolicyDir, convert.PolicyFileName)
 	data, err := os.ReadFile(outputPath)
 	require.NoError(t, err)
 	require.Contains(t, string(data), "BP-1.01")
@@ -327,7 +327,7 @@ func TestScan_ValidTargets(t *testing.T) {
 	require.Equal(t, provider.ResultPassed, resp.Assessments[0].Steps[0].Result)
 
 	// Verify snappy attestation and ampel intoto result files were created
-	resultsDir := filepath.Join(dir, config.WorkspaceDir(), config.ProviderDir, config.DefaultResultsDir)
+	resultsDir := filepath.Join(dir, provider.WorkspaceDir, config.ProviderDir, config.DefaultResultsDir)
 	files, err := os.ReadDir(resultsDir)
 	require.NoError(t, err)
 	require.Len(t, files, 2) // snappy attestation + ampel intoto result
@@ -380,7 +380,7 @@ func TestScan_MultipleSpecs(t *testing.T) {
 	require.Len(t, scanResp.Assessments[0].Steps, 2)
 
 	// Verify 4 output files (2 snappy + 2 ampel)
-	resultsDir := filepath.Join(dir, config.WorkspaceDir(), config.ProviderDir, config.DefaultResultsDir)
+	resultsDir := filepath.Join(dir, provider.WorkspaceDir, config.ProviderDir, config.DefaultResultsDir)
 	files, err := os.ReadDir(resultsDir)
 	require.NoError(t, err)
 	require.Len(t, files, 4)

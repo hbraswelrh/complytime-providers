@@ -10,7 +10,10 @@ import (
 	goplugin "github.com/hashicorp/go-plugin"
 )
 
-var _ Provider = (*Client)(nil)
+var (
+	_ Provider = (*Client)(nil)
+	_ Exporter = (*Client)(nil)
+)
 
 // GenerateRequest carries assessment plan configuration to a provider.
 // See R48: three-tier variable model.
@@ -103,14 +106,34 @@ type DescribeResponse struct {
 	ErrorMessage            string
 	RequiredGlobalVariables []string
 	RequiredTargetVariables []string
+	SupportsExport          bool
+}
+
+// ExportRequest carries collector configuration for evidence export.
+type ExportRequest struct {
+	Collector CollectorConfig
+}
+
+// CollectorConfig holds the Beacon collector endpoint and auth credentials.
+type CollectorConfig struct {
+	Endpoint  string
+	AuthToken string //nolint:gosec // not a hardcoded credential
+}
+
+// ExportResponse reports the outcome of evidence export.
+type ExportResponse struct {
+	Success       bool
+	ExportedCount int32
+	FailedCount   int32
+	ErrorMessage  string
 }
 
 // Client provides gRPC communication with a provider subprocess managed by
 // hashicorp/go-plugin.
 type Client struct {
-	executablePath  string
-	gopluginClient  *goplugin.Client
-	grpcClient      pluginv2.PluginClient
+	executablePath string
+	gopluginClient *goplugin.Client
+	grpcClient     pluginv2.PluginClient
 }
 
 func (c *Client) Close() {
@@ -133,6 +156,7 @@ func (c *Client) Describe(ctx context.Context, req *DescribeRequest) (*DescribeR
 		ErrorMessage:            protoResp.GetErrorMessage(),
 		RequiredGlobalVariables: protoResp.GetRequiredGlobalVariables(),
 		RequiredTargetVariables: protoResp.GetRequiredTargetVariables(),
+		SupportsExport:          protoResp.GetSupportsExport(),
 	}, nil
 }
 
@@ -196,6 +220,25 @@ func (c *Client) Scan(ctx context.Context, req *ScanRequest) (*ScanResponse, err
 	}
 
 	return &ScanResponse{Assessments: assessments}, nil
+}
+
+func (c *Client) Export(ctx context.Context, req *ExportRequest) (*ExportResponse, error) {
+	protoResp, err := c.grpcClient.Export(ctx, &pluginv2.ExportRequest{
+		Collector: &pluginv2.CollectorConfig{
+			Endpoint:  req.Collector.Endpoint,
+			AuthToken: req.Collector.AuthToken,
+		},
+	})
+	if err != nil {
+		return nil, fmt.Errorf("Export RPC failed: %w", err)
+	}
+
+	return &ExportResponse{
+		Success:       protoResp.GetSuccess(),
+		ExportedCount: protoResp.GetExportedCount(),
+		FailedCount:   protoResp.GetFailedCount(),
+		ErrorMessage:  protoResp.GetErrorMessage(),
+	}, nil
 }
 
 func protoResultToInternal(r pluginv2.Result) Result {

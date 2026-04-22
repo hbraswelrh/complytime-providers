@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/complytime/complyctl/pkg/provider"
 	"github.com/stretchr/testify/require"
 )
 
@@ -14,22 +15,22 @@ func TestNewConfig(t *testing.T) {
 }
 
 func TestGranularPolicyDirPath(t *testing.T) {
-	expected := filepath.Join(WorkspaceDir(), ProviderDir, DefaultGranularPolicyDir)
+	expected := filepath.Join(provider.WorkspaceDir, ProviderDir, DefaultGranularPolicyDir)
 	require.Equal(t, expected, GranularPolicyDirPath())
 }
 
 func TestResultsDirPath(t *testing.T) {
-	expected := filepath.Join(WorkspaceDir(), ProviderDir, DefaultResultsDir)
+	expected := filepath.Join(provider.WorkspaceDir, ProviderDir, DefaultResultsDir)
 	require.Equal(t, expected, ResultsDirPath())
 }
 
 func TestGeneratedPolicyDirPath(t *testing.T) {
-	expected := filepath.Join(WorkspaceDir(), ProviderDir, GeneratedPolicyDir)
+	expected := filepath.Join(provider.WorkspaceDir, ProviderDir, GeneratedPolicyDir)
 	require.Equal(t, expected, GeneratedPolicyDirPath())
 }
 
 func TestSpecDirPath(t *testing.T) {
-	expected := filepath.Join(WorkspaceDir(), ProviderDir, "specs")
+	expected := filepath.Join(provider.WorkspaceDir, ProviderDir, "specs")
 	require.Equal(t, expected, SpecDirPath())
 }
 
@@ -43,9 +44,9 @@ func TestEnsureDirectories(t *testing.T) {
 	err = EnsureDirectories()
 	require.NoError(t, err)
 
-	require.DirExists(t, filepath.Join(dir, WorkspaceDir(), ProviderDir))
-	require.DirExists(t, filepath.Join(dir, WorkspaceDir(), ProviderDir, DefaultGranularPolicyDir))
-	require.DirExists(t, filepath.Join(dir, WorkspaceDir(), ProviderDir, GeneratedPolicyDir))
-	require.DirExists(t, filepath.Join(dir, WorkspaceDir(), ProviderDir, DefaultResultsDir))
-	require.DirExists(t, filepath.Join(dir, WorkspaceDir(), ProviderDir, "specs"))
+	require.DirExists(t, filepath.Join(dir, provider.WorkspaceDir, ProviderDir))
+	require.DirExists(t, filepath.Join(dir, provider.WorkspaceDir, ProviderDir, DefaultGranularPolicyDir))
+	require.DirExists(t, filepath.Join(dir, provider.WorkspaceDir, ProviderDir, GeneratedPolicyDir))
+	require.DirExists(t, filepath.Join(dir, provider.WorkspaceDir, ProviderDir, DefaultResultsDir))
+	require.DirExists(t, filepath.Join(dir, provider.WorkspaceDir, ProviderDir, "specs"))
 }
