@@ -3,6 +3,8 @@
 %global goipath github.com/complytime/complytime-providers
 %global base_url https://%{goipath}
 %global app_dir complytime
+# Go binaries include their own debug info; standard RPM debuginfo extraction
+# does not produce useful output for Go executables.
 %global debug_package %{nil}
 
 Name:           complytime-providers
