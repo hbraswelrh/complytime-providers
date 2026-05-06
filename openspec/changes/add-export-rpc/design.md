@@ -15,7 +15,7 @@ ProofWatch (`github.com/complytime/complybeacon/proofwatch`) provides the `Gemar
 
 ## Goals / Non-Goals
 
-**Goals:**
+### Goals
 
 - Both providers satisfy the `provider.Exporter` interface
 - Both providers declare `SupportsExport: true` in `Describe`
@@ -24,7 +24,7 @@ ProofWatch (`github.com/complytime/complybeacon/proofwatch`) provides the `Gemar
 - Export logic is unit-testable with a noop LoggerProvider
 - Existing scan/generate behavior is completely unaffected
 
-**Non-Goals:**
+### Non-Goals
 
 - No changes to the vendored complyctl SDK or proto definitions
 - No custom OTLP transport or retry logic (the OTEL SDK handles this)
@@ -36,19 +36,23 @@ ProofWatch (`github.com/complytime/complybeacon/proofwatch`) provides the `Gemar
 
 ### D1: Shared `export` package per provider vs. a common shared package
 
-Each provider gets its own `export/` package (`cmd/ampel-provider/export/` and `cmd/openscap-provider/export/`). The conversion logic is provider-specific — AMPEL reads JSON attestation results from disk while OpenSCAP reads ARF XML results. The only shared concern is ProofWatch initialization, which is a few lines of code not worth abstracting.
+Each provider gets its own `export/` package (`cmd/ampel-provider/export/` and `cmd/openscap-provider/export/`). The conversion logic is provider-specific — AMPEL reads JSON attestation results from disk while OpenSCAP reads ARF XML results. The OTEL setup code (`Emitter`/`NewEmitter`/`Shutdown`) is identical across both providers (~67 lines); this duplication is accepted because extracting it to `internal/export/` would create a shared package for minimal benefit at the current provider count (2). If a third provider is added, this should be reconsidered.
 
 **Alternative considered**: A single `internal/export/` shared package. Rejected because the result-to-evidence conversion is different for each provider, and a shared package would need provider-specific interfaces adding unnecessary indirection.
 
 ### D2: OTEL SDK setup lives in the export package
 
-Each provider's `export` package creates the OTLP gRPC log exporter, `sdklog.LoggerProvider`, and `ProofWatch` instance from the `CollectorConfig` received in the `ExportRequest`. The setup and teardown happen within the scope of a single `Export` RPC call. The `LoggerProvider` is shut down (flushing buffered logs) before the RPC returns.
+Each provider's `export` package creates the OTLP gRPC log exporter, `sdklog.LoggerProvider`, and `ProofWatch` instance from the `CollectorConfig` received in the `ExportRequest`. The setup and teardown happen within the scope of a single `Export` RPC call. The `LoggerProvider` is shut down (flushing buffered logs) before the RPC returns. The shutdown timeout is bounded at 10 seconds.
+
+The OTLP gRPC exporter uses TLS by default (no `WithInsecure()` option). The endpoint format is `host:port` as expected by the OTLP gRPC library. Endpoint validation is delegated to the OTLP gRPC library, which will fail gracefully on invalid endpoints.
 
 **Alternative considered**: Initializing the OTEL stack once at provider startup and reusing across calls. Rejected because Export is called at most once per scan invocation, and per-call setup avoids state management complexity. The collector config (endpoint, token) comes from the `ExportRequest`, which is only available at call time.
 
 ### D3: Scan results are read from workspace disk, not in-memory state
 
 Both providers write scan results to the workspace directory during `Scan` (AMPEL writes per-repo JSON, OpenSCAP writes ARF XML). The `Export` method reads these same files to build `GemaraEvidence` objects. This avoids adding mutable state to the `ProviderServer` struct and aligns with the existing stateless-server pattern.
+
+Note: The two providers handle "no results" differently. AMPEL treats an empty or missing results directory as "zero results to export" (`Success: true, ExportedCount: 0`) because AMPEL scans multiple repos and an empty directory is a valid state. OpenSCAP treats a missing ARF file as an error (`Success: false`) because the scan is expected to produce exactly one ARF file. This asymmetry reflects the structural difference between the two scan result formats.
 
 **Alternative considered**: Storing scan results in memory on the `ProviderServer` between Scan and Export calls. Rejected because it introduces mutable state, complicates testing, and the files are already written as part of the scan flow.
 
@@ -58,21 +62,23 @@ The `CollectorConfig.AuthToken` (a resolved bearer token from complyctl's OIDC e
 
 ### D5: Result-to-Gemara mapping
 
-Provider scan results map to Gemara types as follows:
+Provider scan results map to Gemara struct fields as follows. The OTEL attribute column shows the wire-format output produced by ProofWatch internally — providers set the Gemara struct fields, not the OTEL attributes directly.
 
-| Provider Domain | Gemara Field | OTEL Attribute |
+| Provider Source | Gemara Field | OTEL Attribute (via ProofWatch) |
 |---|---|---|
-| Provider name ("ampel" / "openscap") | `Metadata.Author.Name` | `policy.engine.name` |
-| `AssessmentLog.RequirementID` | `AssessmentLog.Requirement.EntryId` | `compliance.control.id` |
-| Assessment plan ID | `AssessmentLog.Plan.EntryId` | `policy.rule.id` |
-| `ResultPassed`/`ResultFailed`/etc. | `AssessmentLog.Result` (gemara.Passed/Failed/etc.) | `policy.evaluation.result` |
-| Step messages | `AssessmentLog.Message` | `policy.evaluation.message` |
-| Generated UUID | `Metadata.Id` | `compliance.assessment.id` |
+| Provider name (`"ampel"` / `"openscap"`) | `Metadata.Author.Name` | `policy.engine.name` |
+| AMPEL: `TenetID` (stripped `check-` prefix); OpenSCAP: OVAL check-content-ref name | `AssessmentLog.Requirement.EntryId` | `compliance.control.id` |
+| AMPEL: same requirement ID; OpenSCAP: XCCDF rule ID ref | `AssessmentLog.Plan.EntryId` | `policy.rule.id` |
+| AMPEL: `"pass"`/`"fail"`/default; OpenSCAP: `pass`/`fixed`/`fail`/`error`/`unknown` | `AssessmentLog.Result` (`gemara.Passed`/`Failed`/`Unknown`) | `policy.evaluation.result` |
+| Step messages (AMPEL) / rule title + diagnostics (OpenSCAP) | `AssessmentLog.Message` | `policy.evaluation.message` |
+| Deterministic composite key (AMPEL: `ampel-<reqID>-<repo>-<branch>`; OpenSCAP: `openscap-<reqID>-<ruleIDRef>`) | `Metadata.Id` | `compliance.assessment.id` |
 
 ## Risks / Trade-offs
 
-- **[Risk] OTEL SDK version compatibility**: ProofWatch depends on `go.opentelemetry.io/otel/log v0.16.0`. The `sdk/log` and `otlploggrpc` exporter packages must use compatible versions. → **Mitigation**: Pin to `v0.16.0` for the log-related experimental packages and run `go mod tidy` to verify compatibility.
+- **[Risk] OTEL SDK version compatibility**: ProofWatch depends on experimental OTEL log SDK packages (`go.opentelemetry.io/otel/sdk/log`, `go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc`). These are pre-1.0 (`v0.19.0`) with no API stability guarantee. Breaking changes between minor versions are expected. → **Mitigation**: Pin to `v0.19.0` for the log-related experimental packages and align version updates with ProofWatch's dependency versions. When ProofWatch updates its OTEL dependency, update both providers in lockstep. If a breaking API change is incompatible with ProofWatch, defer the update until ProofWatch adapts.
 
 - **[Risk] Per-call OTEL setup overhead**: Creating and shutting down the OTLP exporter and LoggerProvider for each Export call adds latency (connection setup, TLS handshake, flush timeout). → **Mitigation**: Acceptable for the expected use case (one Export call per scan run). The batch processor flush timeout is bounded at 10 seconds.
 
 - **[Trade-off] Disk-based result reading**: Reading results from disk couples Export to the file layout written by Scan. If the file layout changes, Export must change too. → **Mitigation**: Both are in the same provider binary and tested together. The coupling is intentional and local.
+
+- **[Trade-off] Duplicated Emitter code**: The `export.go` OTEL setup code is byte-for-byte identical across both providers (~67 lines). This is accepted at the current provider count (2) to avoid premature abstraction. If a third provider is added, extract to `internal/export/`.
