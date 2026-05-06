@@ -1,6 +1,7 @@
 # Unbound Force — managed by uf init
 
 @AGENTS.md
+@.specify/memory/constitution.md
 @.opencode/agents/cobalt-crush-dev.md
 
 ## Convention Packs
