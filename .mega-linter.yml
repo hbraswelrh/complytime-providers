@@ -1,5 +1,6 @@
 # https://megalinter.io/latest/supported-linters/
 ADDITIONAL_EXCLUDED_DIRECTORIES:
+  - node_modules
   - vendor
 ENABLE_LINTERS:
   - ACTION_ACTIONLINT
@@ -13,4 +14,4 @@ ENABLE_LINTERS:
   - REPOSITORY_GITLEAKS
   - REPOSITORY_KICS
   - YAML_YAMLLINT
-REPOSITORY_KICS_ARGUMENTS: "--fail-on high"
+REPOSITORY_KICS_ARGUMENTS: "--fail-on high --exclude-paths vendor,node_modules"
