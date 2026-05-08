@@ -23,35 +23,61 @@
 
 ## Constitution Alignment
 
-Assessed against the Unbound Force org constitution.
+Assessed against the ComplyTime Constitution
+(`.specify/memory/constitution.md`).
 
-### I. Autonomous Collaboration
-
-**Assessment**: PASS | N/A
-
-<!-- How does this change affect artifact-based
-communication? Does it maintain self-describing
-outputs? -->
-
-### II. Composability First
+### I. Single Source of Truth
 
 **Assessment**: PASS | N/A
 
-<!-- Does this change maintain standalone
-functionality? Does it avoid introducing mandatory
-dependencies? -->
+<!-- Does this change centralize values used in
+multiple places? Does it avoid introducing magic
+strings or numbers? -->
 
-### III. Observable Quality
-
-**Assessment**: PASS | N/A
-
-<!-- Does this change produce machine-parseable
-output? Does it maintain provenance metadata? -->
-
-### IV. Testability
+### II. Simplicity & Isolation
 
 **Assessment**: PASS | N/A
 
-<!-- Does this change verify observable side effects?
-Are components testable in isolation? -->
+<!-- Does this change reduce complexity? Are new
+functions small, focused, and independently
+testable? -->
+
+### III. Incremental Improvement
+
+**Assessment**: PASS | N/A
+
+<!-- Is this change focused on a single concern?
+Are unrelated improvements separated into their
+own commits or PRs? -->
+
+### IV. Readability First
+
+**Assessment**: PASS | N/A
+
+<!-- Does this change prioritize clarity for the
+reader? Are names explicit and code
+self-documenting? -->
+
+### V. Do Not Reinvent the Wheel
+
+**Assessment**: PASS | N/A
+
+<!-- Does this change leverage established libraries
+where appropriate? Are new dependencies actively
+maintained? -->
+
+### VI. Composability
+
+**Assessment**: PASS | N/A
+
+<!-- Do new functions and programs do one thing well?
+Is output consumable as input for other tools? -->
+
+### VII. Convention Over Configuration
+
+**Assessment**: PASS | N/A
+
+<!-- Does this change provide sensible defaults?
+Do users only need to configure when deviating
+from the standard? -->
 <!-- scaffolded by uf vdev -->
