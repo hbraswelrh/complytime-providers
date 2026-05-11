@@ -85,6 +85,7 @@ Example (`c2p-openscap-manifest.json`):
 |:---|:---|:---|
 | `cmd/openscap-provider` | `complyctl-provider-openscap` | OpenSCAP-based compliance scanning |
 | `cmd/ampel-provider` | `complyctl-provider-ampel` | AMPEL-based policy evaluation |
+| `cmd/opa-provider` | `complyctl-provider-opa` | OPA/conftest-based policy evaluation |
 
 ## Building Providers
 
