@@ -36,7 +36,14 @@ ProofWatch (`github.com/complytime/complybeacon/proofwatch`) provides the `Gemar
 
 ### D1: Shared `export` package per provider vs. a common shared package
 
-Each provider gets its own `export/` package (`cmd/ampel-provider/export/` and `cmd/openscap-provider/export/`). The conversion logic is provider-specific — AMPEL reads JSON attestation results from disk while OpenSCAP reads ARF XML results. The OTEL setup code (`Emitter`/`NewEmitter`/`Shutdown`) is identical across both providers (~67 lines); this duplication is accepted because extracting it to `internal/export/` would create a shared package for minimal benefit at the current provider count (2). If a third provider is added, this should be reconsidered.
+Each provider gets its own `export/` package (`cmd/ampel-provider/export/` and `cmd/openscap-provider/export/`). The conversion logic is provider-specific — AMPEL reads JSON attestation results from disk while OpenSCAP reads ARF XML results. The following code is duplicated across both providers and accepted at the current provider count (2). If a third provider is added, extract to `internal/export/`:
+
+- `export/export.go` — `Emitter` struct, `NewEmitter`, `Shutdown` (~71 lines, byte-for-byte identical)
+- `export/export_test.go` — Emitter unit tests (~100 lines, structurally identical)
+- `server.go` `Export` method — orchestration pattern: read → convert → emit → count → respond (~55 lines, structurally identical with provider-specific read call)
+- `server.go` `exportErrorMessage` helper — error message formatting (~5 lines, byte-for-byte identical)
+
+Additionally, the OpenSCAP provider has two `mapResultStatus` functions — one in `server.go` (returns `provider.Result` for the Scan path) and one in `export/convert.go` (returns `gemara.Result` for the Export path). These map the same XCCDF result strings but to different target types. This intra-provider duplication is accepted because the type boundary makes a shared function impractical without generics or interface indirection.
 
 **Alternative considered**: A single `internal/export/` shared package. Rejected because the result-to-evidence conversion is different for each provider, and a shared package would need provider-specific interfaces adding unnecessary indirection.
 

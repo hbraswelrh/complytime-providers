@@ -25,6 +25,10 @@ type Emitter struct {
 // NewEmitter creates an OTLP gRPC log exporter, LoggerProvider, and ProofWatch
 // instance configured to emit evidence to the given collector endpoint.
 func NewEmitter(ctx context.Context, cfg provider.CollectorConfig) (*Emitter, error) {
+	if cfg.Endpoint == "" {
+		return nil, fmt.Errorf("collector endpoint must not be empty")
+	}
+
 	opts := []otlploggrpc.Option{
 		otlploggrpc.WithEndpoint(cfg.Endpoint),
 	}

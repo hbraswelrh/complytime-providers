@@ -14,6 +14,18 @@ import (
 	"github.com/complytime/complyctl/pkg/provider"
 )
 
+func TestNewEmitter_EmptyEndpoint(t *testing.T) {
+	ctx := context.Background()
+	cfg := provider.CollectorConfig{
+		Endpoint: "",
+	}
+
+	emitter, err := NewEmitter(ctx, cfg)
+	require.Error(t, err)
+	assert.Nil(t, emitter)
+	assert.Contains(t, err.Error(), "collector endpoint must not be empty")
+}
+
 func TestNewEmitter_Success(t *testing.T) {
 	// NewEmitter creates an OTLP gRPC exporter. The gRPC connection is
 	// lazy/async, so this succeeds even without a running collector.

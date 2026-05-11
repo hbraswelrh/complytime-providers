@@ -19,8 +19,8 @@ const (
 	OVALCheckType = "http://oval.mitre.org/XMLSchema/oval-definitions-5"
 )
 
-// OVALRegex extracts the short name from an OVAL check definition ID.
-var OVALRegex = regexp.MustCompile(`^[^:]*?:[^-]*?-(.*?):.*?$`)
+// ovalRegex extracts the short name from an OVAL check definition ID.
+var ovalRegex = regexp.MustCompile(`^[^:]*?:[^-]*?-(.*?):.*?$`)
 
 // ParseARFFile opens and parses an ARF XML file, returning the root node.
 func ParseARFFile(arfPath string) (*xmlquery.Node, error) {
@@ -61,7 +61,7 @@ func ParseCheck(check *xmlquery.Node) (string, error) {
 	if ovalCheckName == "" {
 		return "", errors.New("check-content-ref node has no 'name' attribute")
 	}
-	matches := OVALRegex.FindStringSubmatch(ovalCheckName)
+	matches := ovalRegex.FindStringSubmatch(ovalCheckName)
 
 	minimumPart, shortNameLoc := 2, 1
 	if len(matches) < minimumPart {
