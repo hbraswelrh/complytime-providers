@@ -1,0 +1,1632 @@
+{
+  "scores": [
+    {
+      "package": "config",
+      "function": "NewConfig",
+      "file": "cmd/ampel-provider/config/config.go",
+      "line": 28,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 100,
+      "gaze_crap": 1,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "ampelDir",
+      "file": "cmd/ampel-provider/config/config.go",
+      "line": 33,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "config",
+      "function": "EnsureDirectories",
+      "file": "cmd/ampel-provider/config/config.go",
+      "line": 38,
+      "complexity": 3,
+      "line_coverage": 83.33333333333333,
+      "crap": 3.0416666666666665,
+      "contract_coverage": 100,
+      "gaze_crap": 3,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "GranularPolicyDirPath",
+      "file": "cmd/ampel-provider/config/config.go",
+      "line": 56,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 100,
+      "gaze_crap": 1,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "ResultsDirPath",
+      "file": "cmd/ampel-provider/config/config.go",
+      "line": 61,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 100,
+      "gaze_crap": 1,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "GeneratedPolicyDirPath",
+      "file": "cmd/ampel-provider/config/config.go",
+      "line": 66,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 100,
+      "gaze_crap": 1,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "SpecDirPath",
+      "file": "cmd/ampel-provider/config/config.go",
+      "line": 71,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 100,
+      "gaze_crap": 1,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "convert",
+      "function": "LoadGranularPolicies",
+      "file": "cmd/ampel-provider/convert/convert.go",
+      "line": 20,
+      "complexity": 9,
+      "line_coverage": 86.36363636363636,
+      "crap": 9.20539068369647,
+      "contract_coverage": 66.66666666666667,
+      "gaze_crap": 11.999999999999998,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "convert",
+      "function": "MatchPolicies",
+      "file": "cmd/ampel-provider/convert/convert.go",
+      "line": 61,
+      "complexity": 4,
+      "line_coverage": 100,
+      "crap": 4,
+      "contract_coverage": 66.66666666666667,
+      "gaze_crap": 4.592592592592593,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "convert",
+      "function": "MergeToBundle",
+      "file": "cmd/ampel-provider/convert/convert.go",
+      "line": 90,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 100,
+      "gaze_crap": 1,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "convert",
+      "function": "WritePolicy",
+      "file": "cmd/ampel-provider/convert/convert.go",
+      "line": 107,
+      "complexity": 6,
+      "line_coverage": 72.72727272727273,
+      "crap": 6.730277986476334
+    },
+    {
+      "package": "export",
+      "function": "ReadAndConvert",
+      "file": "cmd/ampel-provider/export/convert.go",
+      "line": 41,
+      "complexity": 8,
+      "line_coverage": 88.88888888888889,
+      "crap": 8.087791495198903,
+      "contract_coverage": 100,
+      "gaze_crap": 8,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "export",
+      "function": "convertResult",
+      "file": "cmd/ampel-provider/export/convert.go",
+      "line": 74,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "export",
+      "function": "mapResult",
+      "file": "cmd/ampel-provider/export/convert.go",
+      "line": 109,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3
+    },
+    {
+      "package": "export",
+      "function": "NewEmitter",
+      "file": "cmd/ampel-provider/export/export.go",
+      "line": 27,
+      "complexity": 5,
+      "line_coverage": 78.57142857142857,
+      "crap": 5.2459912536443145,
+      "contract_coverage": 100,
+      "gaze_crap": 5,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "export",
+      "function": "(*Emitter).Shutdown",
+      "file": "cmd/ampel-provider/export/export.go",
+      "line": 67,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 0,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe",
+      "contract_coverage_reason": "all_effects_ambiguous",
+      "effect_confidence_range": [
+        59,
+        59
+      ]
+    },
+    {
+      "package": "intoto",
+      "function": "UnwrapDSSE",
+      "file": "cmd/ampel-provider/intoto/intoto.go",
+      "line": 18,
+      "complexity": 6,
+      "line_coverage": 100,
+      "crap": 6,
+      "contract_coverage": 100,
+      "gaze_crap": 6,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "main",
+      "function": "main",
+      "file": "cmd/ampel-provider/main.go",
+      "line": 10,
+      "complexity": 1,
+      "line_coverage": 0,
+      "crap": 2
+    },
+    {
+      "package": "results",
+      "function": "ParseAmpelOutput",
+      "file": "cmd/ampel-provider/results/results.go",
+      "line": 90,
+      "complexity": 16,
+      "line_coverage": 97.43589743589743,
+      "crap": 16.004315649286063,
+      "contract_coverage": 100,
+      "gaze_crap": 16,
+      "quadrant": "Q4_Dangerous",
+      "fix_strategy": "decompose"
+    },
+    {
+      "package": "results",
+      "function": "WritePerRepoResult",
+      "file": "cmd/ampel-provider/results/results.go",
+      "line": 171,
+      "complexity": 4,
+      "line_coverage": 70,
+      "crap": 4.432,
+      "contract_coverage": 100,
+      "gaze_crap": 4,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "results",
+      "function": "ToScanResponse",
+      "file": "cmd/ampel-provider/results/results.go",
+      "line": 195,
+      "complexity": 9,
+      "line_coverage": 100,
+      "crap": 9,
+      "contract_coverage": 100,
+      "gaze_crap": 9,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "results",
+      "function": "mapResult",
+      "file": "cmd/ampel-provider/results/results.go",
+      "line": 265,
+      "complexity": 5,
+      "line_coverage": 100,
+      "crap": 5
+    },
+    {
+      "package": "results",
+      "function": "stripControlChars",
+      "file": "cmd/ampel-provider/results/results.go",
+      "line": 281,
+      "complexity": 4,
+      "line_coverage": 100,
+      "crap": 4
+    },
+    {
+      "package": "results",
+      "function": "isPrintableASCII",
+      "file": "cmd/ampel-provider/results/results.go",
+      "line": 290,
+      "complexity": 4,
+      "line_coverage": 100,
+      "crap": 4
+    },
+    {
+      "package": "scan",
+      "function": "(ExecRunner).Run",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 53,
+      "complexity": 1,
+      "line_coverage": 0,
+      "crap": 2
+    },
+    {
+      "package": "scan",
+      "function": "(ExecRunner).RunWithEnv",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 59,
+      "complexity": 1,
+      "line_coverage": 0,
+      "crap": 2
+    },
+    {
+      "package": "scan",
+      "function": "buildTokenEnv",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 68,
+      "complexity": 4,
+      "line_coverage": 100,
+      "crap": 4
+    },
+    {
+      "package": "scan",
+      "function": "WriteSpecFiles",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 89,
+      "complexity": 7,
+      "line_coverage": 76.47058823529412,
+      "crap": 7.638306533686139,
+      "contract_coverage": 100,
+      "gaze_crap": 7,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "scan",
+      "function": "ResolveSpecPath",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 132,
+      "complexity": 6,
+      "line_coverage": 100,
+      "crap": 6,
+      "contract_coverage": 100,
+      "gaze_crap": 6,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "scan",
+      "function": "sanitizeSpecName",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 151,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "scan",
+      "function": "constructSnappyCommand",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 165,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "scan",
+      "function": "constructAmpelVerifyCommand",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 190,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "scan",
+      "function": "extractSubjectHash",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 215,
+      "complexity": 2,
+      "line_coverage": 75,
+      "crap": 2.0625
+    },
+    {
+      "package": "scan",
+      "function": "extractHashFromStatement",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 223,
+      "complexity": 5,
+      "line_coverage": 100,
+      "crap": 5
+    },
+    {
+      "package": "scan",
+      "function": "ScanRepository",
+      "file": "cmd/ampel-provider/scan/scan.go",
+      "line": 243,
+      "complexity": 11,
+      "line_coverage": 89.74358974358974,
+      "crap": 11.13054839090342,
+      "contract_coverage": 100,
+      "gaze_crap": 11,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "New",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 44,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 0,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "(*ProviderServer).Describe",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 49,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 100,
+      "gaze_crap": 1,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "(*ProviderServer).Generate",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 61,
+      "complexity": 10,
+      "line_coverage": 88.46153846153847,
+      "crap": 10.153618570778335,
+      "contract_coverage": 100,
+      "gaze_crap": 10,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "(*ProviderServer).Scan",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 125,
+      "complexity": 17,
+      "line_coverage": 83.05084745762711,
+      "crap": 18.40715457763452,
+      "contract_coverage": 100,
+      "gaze_crap": 17,
+      "quadrant": "Q4_Dangerous",
+      "fix_strategy": "decompose"
+    },
+    {
+      "package": "server",
+      "function": "splitCSV",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 245,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3
+    },
+    {
+      "package": "server",
+      "function": "validateTargetVariables",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 260,
+      "complexity": 11,
+      "line_coverage": 65,
+      "crap": 16.187875,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "server",
+      "function": "(*ProviderServer).Export",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 304,
+      "complexity": 7,
+      "line_coverage": 86.36363636363636,
+      "crap": 7.124248685199098,
+      "contract_coverage": 100,
+      "gaze_crap": 7,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "exportErrorMessage",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 357,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "server",
+      "function": "checkRequiredTools",
+      "file": "cmd/ampel-provider/server/server.go",
+      "line": 365,
+      "complexity": 4,
+      "line_coverage": 77.77777777777777,
+      "crap": 4.175582990397805
+    },
+    {
+      "package": "targets",
+      "function": "ParseRepoURL",
+      "file": "cmd/ampel-provider/targets/targets.go",
+      "line": 15,
+      "complexity": 9,
+      "line_coverage": 95.65217391304348,
+      "crap": 9.006657351853374,
+      "contract_coverage": 100,
+      "gaze_crap": 9,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "targets",
+      "function": "SanitizeRepoURL",
+      "file": "cmd/ampel-provider/targets/targets.go",
+      "line": 59,
+      "complexity": 7,
+      "line_coverage": 100,
+      "crap": 7,
+      "contract_coverage": 100,
+      "gaze_crap": 7,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "targets",
+      "function": "RepoDisplayName",
+      "file": "cmd/ampel-provider/targets/targets.go",
+      "line": 80,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2,
+      "contract_coverage": 100,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "toolcheck",
+      "function": "CheckTools",
+      "file": "cmd/ampel-provider/toolcheck/toolcheck.go",
+      "line": 14,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3,
+      "contract_coverage": 100,
+      "gaze_crap": 3,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "toolcheck",
+      "function": "FormatMissingToolsError",
+      "file": "cmd/ampel-provider/toolcheck/toolcheck.go",
+      "line": 26,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2,
+      "contract_coverage": 100,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "EnsureDirectories",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 40,
+      "complexity": 3,
+      "line_coverage": 80,
+      "crap": 3.072,
+      "contract_coverage": 100,
+      "gaze_crap": 3,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "ResolveDatastream",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 58,
+      "complexity": 6,
+      "line_coverage": 72.72727272727273,
+      "crap": 6.730277986476334,
+      "contract_coverage": 100,
+      "gaze_crap": 6,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "SanitizeInput",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 80,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2,
+      "contract_coverage": 100,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "SanitizePath",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 88,
+      "complexity": 2,
+      "line_coverage": 80,
+      "crap": 2.032,
+      "contract_coverage": 100,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "IsXMLFile",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 97,
+      "complexity": 5,
+      "line_coverage": 90.9090909090909,
+      "crap": 5.018782870022539,
+      "contract_coverage": 100,
+      "gaze_crap": 5,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "config",
+      "function": "expandPath",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 116,
+      "complexity": 4,
+      "line_coverage": 83.33333333333333,
+      "crap": 4.074074074074074
+    },
+    {
+      "package": "config",
+      "function": "validatePath",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 127,
+      "complexity": 6,
+      "line_coverage": 75,
+      "crap": 6.5625
+    },
+    {
+      "package": "config",
+      "function": "ensureDirectory",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 143,
+      "complexity": 4,
+      "line_coverage": 87.5,
+      "crap": 4.03125
+    },
+    {
+      "package": "config",
+      "function": "getDistroIdsAndVersions",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 157,
+      "complexity": 9,
+      "line_coverage": 0,
+      "crap": 90,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "config",
+      "function": "findMatchingDatastream",
+      "file": "cmd/openscap-provider/config/config.go",
+      "line": 195,
+      "complexity": 10,
+      "line_coverage": 0,
+      "crap": 110,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "export",
+      "function": "ReadAndConvert",
+      "file": "cmd/openscap-provider/export/convert.go",
+      "line": 20,
+      "complexity": 5,
+      "line_coverage": 92.85714285714286,
+      "crap": 5.009110787172012,
+      "contract_coverage": 100,
+      "gaze_crap": 5,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "export",
+      "function": "convertRuleResult",
+      "file": "cmd/openscap-provider/export/convert.go",
+      "line": 45,
+      "complexity": 7,
+      "line_coverage": 82.6086956521739,
+      "crap": 7.257746363113339
+    },
+    {
+      "package": "export",
+      "function": "mapResultStatus",
+      "file": "cmd/openscap-provider/export/convert.go",
+      "line": 103,
+      "complexity": 4,
+      "line_coverage": 100,
+      "crap": 4
+    },
+    {
+      "package": "export",
+      "function": "NewEmitter",
+      "file": "cmd/openscap-provider/export/export.go",
+      "line": 27,
+      "complexity": 5,
+      "line_coverage": 78.57142857142857,
+      "crap": 5.2459912536443145,
+      "contract_coverage": 100,
+      "gaze_crap": 5,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "export",
+      "function": "(*Emitter).Shutdown",
+      "file": "cmd/openscap-provider/export/export.go",
+      "line": 67,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 0,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe",
+      "contract_coverage_reason": "all_effects_ambiguous",
+      "effect_confidence_range": [
+        59,
+        59
+      ]
+    },
+    {
+      "package": "main",
+      "function": "main",
+      "file": "cmd/openscap-provider/main.go",
+      "line": 10,
+      "complexity": 1,
+      "line_coverage": 0,
+      "crap": 2
+    },
+    {
+      "package": "oscap",
+      "function": "shellJoin",
+      "file": "cmd/openscap-provider/oscap/oscap.go",
+      "line": 17,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "oscap",
+      "function": "executeCommand",
+      "file": "cmd/openscap-provider/oscap/oscap.go",
+      "line": 21,
+      "complexity": 6,
+      "line_coverage": 58.8235294117647,
+      "crap": 8.513331976389171
+    },
+    {
+      "package": "oscap",
+      "function": "constructScanCommand",
+      "file": "cmd/openscap-provider/oscap/oscap.go",
+      "line": 51,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "oscap",
+      "function": "OscapScan",
+      "file": "cmd/openscap-provider/oscap/oscap.go",
+      "line": 71,
+      "complexity": 1,
+      "line_coverage": 0,
+      "crap": 2
+    },
+    {
+      "package": "oscap",
+      "function": "constructGenerateFixCommand",
+      "file": "cmd/openscap-provider/oscap/oscap.go",
+      "line": 77,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "oscap",
+      "function": "OscapGenerateFix",
+      "file": "cmd/openscap-provider/oscap/oscap.go",
+      "line": 93,
+      "complexity": 3,
+      "line_coverage": 0,
+      "crap": 12
+    },
+    {
+      "package": "scan",
+      "function": "validateOpenSCAPFiles",
+      "file": "cmd/openscap-provider/scan/scan.go",
+      "line": 15,
+      "complexity": 4,
+      "line_coverage": 83.33333333333333,
+      "crap": 4.074074074074074
+    },
+    {
+      "package": "scan",
+      "function": "ScanSystem",
+      "file": "cmd/openscap-provider/scan/scan.go",
+      "line": 35,
+      "complexity": 4,
+      "line_coverage": 0,
+      "crap": 20,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "server",
+      "function": "New",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 30,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 0,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "(*ProviderServer).Describe",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 34,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1,
+      "contract_coverage": 100,
+      "gaze_crap": 1,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "(*ProviderServer).Generate",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 43,
+      "complexity": 2,
+      "line_coverage": 66.66666666666667,
+      "crap": 2.148148148148148,
+      "contract_coverage": 100,
+      "gaze_crap": 2,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "generateArtifacts",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 53,
+      "complexity": 3,
+      "line_coverage": 33.333333333333336,
+      "crap": 5.666666666666666
+    },
+    {
+      "package": "server",
+      "function": "resolveProfileAndDatastream",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 66,
+      "complexity": 3,
+      "line_coverage": 0,
+      "crap": 12
+    },
+    {
+      "package": "server",
+      "function": "executeGeneration",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 81,
+      "complexity": 4,
+      "line_coverage": 0,
+      "crap": 20,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "server",
+      "function": "writeTailoringFile",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 98,
+      "complexity": 4,
+      "line_coverage": 0,
+      "crap": 20,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "server",
+      "function": "(*ProviderServer).Scan",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 116,
+      "complexity": 4,
+      "line_coverage": 22.22222222222222,
+      "crap": 11.5281207133059,
+      "contract_coverage": 100,
+      "gaze_crap": 4,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "runScanAndParseARF",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 133,
+      "complexity": 4,
+      "line_coverage": 0,
+      "crap": 20,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "server",
+      "function": "buildAssessmentsFromARF",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 153,
+      "complexity": 5,
+      "line_coverage": 64.28571428571429,
+      "crap": 6.138848396501457
+    },
+    {
+      "package": "server",
+      "function": "assessmentFromRuleResult",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 176,
+      "complexity": 2,
+      "line_coverage": 0,
+      "crap": 6
+    },
+    {
+      "package": "server",
+      "function": "resolveRuleResult",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 185,
+      "complexity": 4,
+      "line_coverage": 0,
+      "crap": 20,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "server",
+      "function": "buildAssessmentLog",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 203,
+      "complexity": 4,
+      "line_coverage": 0,
+      "crap": 20,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "server",
+      "function": "mergeVariables",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 235,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3
+    },
+    {
+      "package": "server",
+      "function": "(*ProviderServer).Export",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 248,
+      "complexity": 8,
+      "line_coverage": 86.95652173913044,
+      "crap": 8.142023506205309,
+      "contract_coverage": 100,
+      "gaze_crap": 8,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "server",
+      "function": "exportErrorMessage",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 307,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "server",
+      "function": "mapResultStatus",
+      "file": "cmd/openscap-provider/server/server.go",
+      "line": 314,
+      "complexity": 4,
+      "line_coverage": 100,
+      "crap": 4
+    },
+    {
+      "package": "xccdf",
+      "function": "ParseARFFile",
+      "file": "cmd/openscap-provider/xccdf/arf.go",
+      "line": 26,
+      "complexity": 3,
+      "line_coverage": 0,
+      "crap": 12
+    },
+    {
+      "package": "xccdf",
+      "function": "IsSkippableResult",
+      "file": "cmd/openscap-provider/xccdf/arf.go",
+      "line": 42,
+      "complexity": 2,
+      "line_coverage": 0,
+      "crap": 6
+    },
+    {
+      "package": "xccdf",
+      "function": "FindOVALCheckContentRef",
+      "file": "cmd/openscap-provider/xccdf/arf.go",
+      "line": 48,
+      "complexity": 3,
+      "line_coverage": 0,
+      "crap": 12
+    },
+    {
+      "package": "xccdf",
+      "function": "ParseCheck",
+      "file": "cmd/openscap-provider/xccdf/arf.go",
+      "line": 59,
+      "complexity": 3,
+      "line_coverage": 0,
+      "crap": 12
+    },
+    {
+      "package": "xccdf",
+      "function": "RuleResultMessage",
+      "file": "cmd/openscap-provider/xccdf/arf.go",
+      "line": 75,
+      "complexity": 8,
+      "line_coverage": 0,
+      "crap": 72,
+      "fix_strategy": "add_tests"
+    },
+    {
+      "package": "xccdf",
+      "function": "loadDataStream",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 41,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsProfileID",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 56,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsRuleID",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 60,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsVarID",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 64,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsElement",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 68,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsElementAttrValue",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 76,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsOptionalAttrValue",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 85,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsElements",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 93,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsProfile",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 100,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsElementTitle",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 104,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "xccdf",
+      "function": "getDsElementDescription",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 112,
+      "complexity": 2,
+      "line_coverage": 100,
+      "crap": 2
+    },
+    {
+      "package": "xccdf",
+      "function": "populateProfileInfo",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 120,
+      "complexity": 7,
+      "line_coverage": 95.23809523809524,
+      "crap": 7.005291005291006
+    },
+    {
+      "package": "xccdf",
+      "function": "populateProfileVariables",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 158,
+      "complexity": 6,
+      "line_coverage": 85.71428571428571,
+      "crap": 6.104956268221574
+    },
+    {
+      "package": "xccdf",
+      "function": "populateProfileRules",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 186,
+      "complexity": 7,
+      "line_coverage": 82.3529411764706,
+      "crap": 7.269285568898839
+    },
+    {
+      "package": "xccdf",
+      "function": "initProfile",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 218,
+      "complexity": 4,
+      "line_coverage": 83.33333333333333,
+      "crap": 4.074074074074074
+    },
+    {
+      "package": "xccdf",
+      "function": "GetDsProfile",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 240,
+      "complexity": 5,
+      "line_coverage": 84.61538461538461,
+      "crap": 5.091033227127902,
+      "contract_coverage": 100,
+      "gaze_crap": 5,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "xccdf",
+      "function": "GetDsVariablesValues",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 264,
+      "complexity": 10,
+      "line_coverage": 82.75862068965517,
+      "crap": 10.512526138833081,
+      "contract_coverage": 100,
+      "gaze_crap": 10,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "xccdf",
+      "function": "getValueFromOption",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 320,
+      "complexity": 5,
+      "line_coverage": 100,
+      "crap": 5
+    },
+    {
+      "package": "xccdf",
+      "function": "ResolveDsVariableOptions",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 333,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3,
+      "contract_coverage": 66.66666666666667,
+      "gaze_crap": 3.333333333333333,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "xccdf",
+      "function": "GetDsRules",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 344,
+      "complexity": 9,
+      "line_coverage": 76,
+      "crap": 10.119744,
+      "contract_coverage": 100,
+      "gaze_crap": 9,
+      "quadrant": "Q1_Safe"
+    },
+    {
+      "package": "xccdf",
+      "function": "NewRuleHashTable",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 393,
+      "complexity": 1,
+      "line_coverage": 0,
+      "crap": 2
+    },
+    {
+      "package": "xccdf",
+      "function": "newHashTableFromRootAndQuery",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 397,
+      "complexity": 1,
+      "line_coverage": 0,
+      "crap": 2
+    },
+    {
+      "package": "xccdf",
+      "function": "newByIdHashTable",
+      "file": "cmd/openscap-provider/xccdf/datastream.go",
+      "line": 407,
+      "complexity": 2,
+      "line_coverage": 0,
+      "crap": 6
+    },
+    {
+      "package": "xccdf",
+      "function": "removePrefix",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 23,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringID",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 27,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringExtendedProfileID",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 31,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringProfileID",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 36,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringProfileTitle",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 41,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringVersion",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 45,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringBenchmarkHref",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 52,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "validateRuleExistence",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 58,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3
+    },
+    {
+      "package": "xccdf",
+      "function": "validateVariableExistence",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 68,
+      "complexity": 3,
+      "line_coverage": 100,
+      "crap": 3
+    },
+    {
+      "package": "xccdf",
+      "function": "unselectAbsentRules",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 78,
+      "complexity": 6,
+      "line_coverage": 100,
+      "crap": 6
+    },
+    {
+      "package": "xccdf",
+      "function": "selectAdditionalRules",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 98,
+      "complexity": 7,
+      "line_coverage": 100,
+      "crap": 7
+    },
+    {
+      "package": "xccdf",
+      "function": "filterValidRules",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 124,
+      "complexity": 5,
+      "line_coverage": 91.66666666666667,
+      "crap": 5.014467592592593
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringSelections",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 149,
+      "complexity": 1,
+      "line_coverage": 100,
+      "crap": 1
+    },
+    {
+      "package": "xccdf",
+      "function": "updateTailoringValues",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 157,
+      "complexity": 8,
+      "line_coverage": 100,
+      "crap": 8
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringValues",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 185,
+      "complexity": 6,
+      "line_coverage": 84.61538461538461,
+      "crap": 6.131087847064179
+    },
+    {
+      "package": "xccdf",
+      "function": "getTailoringProfile",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 210,
+      "complexity": 5,
+      "line_coverage": 76.47058823529412,
+      "crap": 5.325666598819459
+    },
+    {
+      "package": "xccdf",
+      "function": "PolicyToXML",
+      "file": "cmd/openscap-provider/xccdf/tailoring.go",
+      "line": 244,
+      "complexity": 4,
+      "line_coverage": 70,
+      "crap": 4.432,
+      "contract_coverage": 100,
+      "gaze_crap": 4,
+      "quadrant": "Q1_Safe"
+    }
+  ],
+  "summary": {
+    "total_functions": 135,
+    "avg_complexity": 3.888888888888889,
+    "avg_line_coverage": 75.30914218222327,
+    "avg_crap": 7.103400036830647,
+    "crapload": 12,
+    "crap_threshold": 15,
+    "gaze_crapload": 2,
+    "gaze_crap_threshold": 15,
+    "avg_gaze_crap": 5.062253743104807,
+    "avg_contract_coverage": 89.36170212765957,
+    "quadrant_counts": {
+      "Q1_Safe": 45,
+      "Q4_Dangerous": 2
+    },
+    "fix_strategy_counts": {
+      "add_tests": 10,
+      "decompose": 2
+    },
+    "worst_crap": [
+      {
+        "package": "config",
+        "function": "findMatchingDatastream",
+        "file": "cmd/openscap-provider/config/config.go",
+        "line": 195,
+        "complexity": 10,
+        "line_coverage": 0,
+        "crap": 110,
+        "fix_strategy": "add_tests"
+      },
+      {
+        "package": "config",
+        "function": "getDistroIdsAndVersions",
+        "file": "cmd/openscap-provider/config/config.go",
+        "line": 157,
+        "complexity": 9,
+        "line_coverage": 0,
+        "crap": 90,
+        "fix_strategy": "add_tests"
+      },
+      {
+        "package": "xccdf",
+        "function": "RuleResultMessage",
+        "file": "cmd/openscap-provider/xccdf/arf.go",
+        "line": 75,
+        "complexity": 8,
+        "line_coverage": 0,
+        "crap": 72,
+        "fix_strategy": "add_tests"
+      },
+      {
+        "package": "server",
+        "function": "runScanAndParseARF",
+        "file": "cmd/openscap-provider/server/server.go",
+        "line": 133,
+        "complexity": 4,
+        "line_coverage": 0,
+        "crap": 20,
+        "fix_strategy": "add_tests"
+      },
+      {
+        "package": "server",
+        "function": "buildAssessmentLog",
+        "file": "cmd/openscap-provider/server/server.go",
+        "line": 203,
+        "complexity": 4,
+        "line_coverage": 0,
+        "crap": 20,
+        "fix_strategy": "add_tests"
+      }
+    ],
+    "worst_gaze_crap": [
+      {
+        "package": "server",
+        "function": "(*ProviderServer).Scan",
+        "file": "cmd/ampel-provider/server/server.go",
+        "line": 125,
+        "complexity": 17,
+        "line_coverage": 83.05084745762711,
+        "crap": 18.40715457763452,
+        "contract_coverage": 100,
+        "gaze_crap": 17,
+        "quadrant": "Q4_Dangerous",
+        "fix_strategy": "decompose"
+      },
+      {
+        "package": "results",
+        "function": "ParseAmpelOutput",
+        "file": "cmd/ampel-provider/results/results.go",
+        "line": 90,
+        "complexity": 16,
+        "line_coverage": 97.43589743589743,
+        "crap": 16.004315649286063,
+        "contract_coverage": 100,
+        "gaze_crap": 16,
+        "quadrant": "Q4_Dangerous",
+        "fix_strategy": "decompose"
+      },
+      {
+        "package": "convert",
+        "function": "LoadGranularPolicies",
+        "file": "cmd/ampel-provider/convert/convert.go",
+        "line": 20,
+        "complexity": 9,
+        "line_coverage": 86.36363636363636,
+        "crap": 9.20539068369647,
+        "contract_coverage": 66.66666666666667,
+        "gaze_crap": 11.999999999999998,
+        "quadrant": "Q1_Safe"
+      },
+      {
+        "package": "scan",
+        "function": "ScanRepository",
+        "file": "cmd/ampel-provider/scan/scan.go",
+        "line": 243,
+        "complexity": 11,
+        "line_coverage": 89.74358974358974,
+        "crap": 11.13054839090342,
+        "contract_coverage": 100,
+        "gaze_crap": 11,
+        "quadrant": "Q1_Safe"
+      },
+      {
+        "package": "xccdf",
+        "function": "GetDsVariablesValues",
+        "file": "cmd/openscap-provider/xccdf/datastream.go",
+        "line": 264,
+        "complexity": 10,
+        "line_coverage": 82.75862068965517,
+        "crap": 10.512526138833081,
+        "contract_coverage": 100,
+        "gaze_crap": 10,
+        "quadrant": "Q1_Safe"
+      }
+    ],
+    "recommended_actions": [
+      {
+        "function": "findMatchingDatastream",
+        "package": "config",
+        "file": "cmd/openscap-provider/config/config.go",
+        "line": 195,
+        "fix_strategy": "add_tests",
+        "crap": 110,
+        "complexity": 10
+      },
+      {
+        "function": "getDistroIdsAndVersions",
+        "package": "config",
+        "file": "cmd/openscap-provider/config/config.go",
+        "line": 157,
+        "fix_strategy": "add_tests",
+        "crap": 90,
+        "complexity": 9
+      },
+      {
+        "function": "RuleResultMessage",
+        "package": "xccdf",
+        "file": "cmd/openscap-provider/xccdf/arf.go",
+        "line": 75,
+        "fix_strategy": "add_tests",
+        "crap": 72,
+        "complexity": 8
+      },
+      {
+        "function": "ScanSystem",
+        "package": "scan",
+        "file": "cmd/openscap-provider/scan/scan.go",
+        "line": 35,
+        "fix_strategy": "add_tests",
+        "crap": 20,
+        "complexity": 4
+      },
+      {
+        "function": "executeGeneration",
+        "package": "server",
+        "file": "cmd/openscap-provider/server/server.go",
+        "line": 81,
+        "fix_strategy": "add_tests",
+        "crap": 20,
+        "complexity": 4
+      },
+      {
+        "function": "writeTailoringFile",
+        "package": "server",
+        "file": "cmd/openscap-provider/server/server.go",
+        "line": 98,
+        "fix_strategy": "add_tests",
+        "crap": 20,
+        "complexity": 4
+      },
+      {
+        "function": "runScanAndParseARF",
+        "package": "server",
+        "file": "cmd/openscap-provider/server/server.go",
+        "line": 133,
+        "fix_strategy": "add_tests",
+        "crap": 20,
+        "complexity": 4
+      },
+      {
+        "function": "resolveRuleResult",
+        "package": "server",
+        "file": "cmd/openscap-provider/server/server.go",
+        "line": 185,
+        "fix_strategy": "add_tests",
+        "crap": 20,
+        "complexity": 4
+      },
+      {
+        "function": "buildAssessmentLog",
+        "package": "server",
+        "file": "cmd/openscap-provider/server/server.go",
+        "line": 203,
+        "fix_strategy": "add_tests",
+        "crap": 20,
+        "complexity": 4
+      },
+      {
+        "function": "validateTargetVariables",
+        "package": "server",
+        "file": "cmd/ampel-provider/server/server.go",
+        "line": 260,
+        "fix_strategy": "add_tests",
+        "crap": 16.187875,
+        "complexity": 11
+      },
+      {
+        "function": "(*ProviderServer).Scan",
+        "package": "server",
+        "file": "cmd/ampel-provider/server/server.go",
+        "line": 125,
+        "fix_strategy": "decompose",
+        "crap": 18.40715457763452,
+        "gaze_crap": 17,
+        "complexity": 17,
+        "quadrant": "Q4_Dangerous"
+      },
+      {
+        "function": "ParseAmpelOutput",
+        "package": "results",
+        "file": "cmd/ampel-provider/results/results.go",
+        "line": 90,
+        "fix_strategy": "decompose",
+        "crap": 16.004315649286063,
+        "gaze_crap": 16,
+        "complexity": 16,
+        "quadrant": "Q4_Dangerous"
+      }
+    ]
+  }
+}
