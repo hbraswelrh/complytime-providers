@@ -263,5 +263,3 @@ func TestMapResultStatus(t *testing.T) {
 		})
 	}
 }
-
-

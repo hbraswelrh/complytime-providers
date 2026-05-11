@@ -116,5 +116,3 @@ func mapResult(result string) gemara.Result {
 		return gemara.Unknown
 	}
 }
-
-
