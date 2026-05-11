@@ -9,9 +9,9 @@ import (
 	"time"
 	"unicode"
 
+	"github.com/complytime/complyctl/pkg/provider"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/intoto"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/targets"
-	"github.com/complytime/complyctl/pkg/provider"
 )
 
 const maxFieldSize = 10 * 1024 // 10KB per field

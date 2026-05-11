@@ -15,16 +15,16 @@ import (
 	"github.com/antchfx/xmlquery"
 	"github.com/hashicorp/go-hclog"
 
+	"github.com/complytime/complyctl/pkg/provider"
 	"github.com/complytime/complytime-providers/cmd/openscap-provider/config"
 	"github.com/complytime/complytime-providers/cmd/openscap-provider/oscap"
 	"github.com/complytime/complytime-providers/cmd/openscap-provider/scan"
 	"github.com/complytime/complytime-providers/cmd/openscap-provider/xccdf"
-	"github.com/complytime/complyctl/pkg/provider"
 )
 
 var (
 	_         provider.Provider = (*ProviderServer)(nil)
-	ovalRegex               = regexp.MustCompile(`^[^:]*?:[^-]*?-(.*?):.*?$`)
+	ovalRegex                   = regexp.MustCompile(`^[^:]*?:[^-]*?-(.*?):.*?$`)
 )
 
 const ovalCheckType = "http://oval.mitre.org/XMLSchema/oval-definitions-5"

@@ -10,13 +10,13 @@ import (
 
 	"github.com/hashicorp/go-hclog"
 
+	"github.com/complytime/complyctl/pkg/provider"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/config"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/convert"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/results"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/scan"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/targets"
 	"github.com/complytime/complytime-providers/cmd/ampel-provider/toolcheck"
-	"github.com/complytime/complyctl/pkg/provider"
 )
 
 // ScanRunner is used by Scan to execute scan commands.

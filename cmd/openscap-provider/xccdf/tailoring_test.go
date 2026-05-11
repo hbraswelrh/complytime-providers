@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	xccdf "github.com/complytime/complytime-providers/cmd/openscap-provider/xccdftype"
 	"github.com/complytime/complyctl/pkg/provider"
+	xccdf "github.com/complytime/complytime-providers/cmd/openscap-provider/xccdftype"
 )
 
 // This is a supporting function to get the profile element from the testing Datastream.
@@ -584,6 +584,8 @@ func TestUpdateTailoringValues(t *testing.T) {
 }
 
 // TestGetTailoringValues tests the getTailoringValues function.
+//
+//nolint:gosec // G101 false positive: XCCDF variable names contain "password" but are not credentials
 func TestGetTailoringValues(t *testing.T) {
 	dsPath := filepath.Join(testDataDir, "ssg-rhel-ds.xml")
 
