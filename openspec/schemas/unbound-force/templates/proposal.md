@@ -23,61 +23,38 @@
 
 ## Constitution Alignment
 
-Assessed against the ComplyTime Constitution
-(`.specify/memory/constitution.md`).
+Assessed against the Unbound Force org constitution.
 
-### I. Single Source of Truth
-
-**Assessment**: PASS | N/A
-
-<!-- Does this change centralize values used in
-multiple places? Does it avoid introducing magic
-strings or numbers? -->
-
-### II. Simplicity & Isolation
+### I. Autonomous Collaboration
 
 **Assessment**: PASS | N/A
 
-<!-- Does this change reduce complexity? Are new
-functions small, focused, and independently
-testable? -->
+<!-- How does this change affect artifact-based
+communication? Does it maintain self-describing
+outputs? -->
 
-### III. Incremental Improvement
-
-**Assessment**: PASS | N/A
-
-<!-- Is this change focused on a single concern?
-Are unrelated improvements separated into their
-own commits or PRs? -->
-
-### IV. Readability First
+### II. Composability First
 
 **Assessment**: PASS | N/A
 
-<!-- Does this change prioritize clarity for the
-reader? Are names explicit and code
-self-documenting? -->
+<!-- Does this change maintain standalone
+functionality? Does it avoid introducing mandatory
+dependencies? -->
 
-### V. Do Not Reinvent the Wheel
-
-**Assessment**: PASS | N/A
-
-<!-- Does this change leverage established libraries
-where appropriate? Are new dependencies actively
-maintained? -->
-
-### VI. Composability
+### III. Observable Quality
 
 **Assessment**: PASS | N/A
 
-<!-- Do new functions and programs do one thing well?
-Is output consumable as input for other tools? -->
+<!-- Does this change produce machine-parseable
+output? Does it maintain provenance metadata? -->
 
-### VII. Convention Over Configuration
+### IV. Testability
 
 **Assessment**: PASS | N/A
 
-<!-- Does this change provide sensible defaults?
-Do users only need to configure when deviating
-from the standard? -->
+<!-- Does this change verify observable side effects?
+Are components testable in isolation? -->
+<!-- scaffolded by uf vv0.6.1 -->
 <!-- scaffolded by uf vdev -->
+<!-- scaffolded by uf vdev -->
+<!-- scaffolded by uf vv0.12.0 -->

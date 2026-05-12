@@ -2,15 +2,17 @@
 
 complytime-providers ships compliance-scanning provider plugins for
 the `complyctl` CLI. Each provider implements the `complyctl`
-gRPC plugin interface (hashicorp/go-plugin) with three RPCs:
-`Describe`, `Generate`, and `Scan`.
+gRPC plugin interface (hashicorp/go-plugin) with three core RPCs
+(`Describe`, `Generate`, `Scan`) and the optional `Export` RPC
+for shipping compliance evidence to an OTLP collector.
 
 - **Type**: Multi-binary Go plugin repository
 - **Binaries**: `complyctl-provider-openscap`, `complyctl-provider-ampel`
 - **License**: Apache-2.0
 - **Go version**: 1.25.0
 - **Key dependencies**: complyctl (plugin framework), hashicorp/go-plugin,
-  stretchr/testify, antchfx/xmlquery
+  stretchr/testify, antchfx/xmlquery, proofwatch (OTLP evidence emission),
+  go-gemara (Gemara types)
 
 ## Build & Test Commands
 
@@ -48,6 +50,7 @@ complytime-providers/
 ├── cmd/
 │   ├── openscap-provider/     # Binary: complyctl-provider-openscap
 │   │   ├── config/            #   Configuration handling
+│   │   ├── export/            #   OTLP evidence export
 │   │   ├── oscap/             #   OpenSCAP tool invocation
 │   │   ├── scan/              #   Scan orchestration
 │   │   ├── server/            #   gRPC provider implementation
@@ -56,6 +59,7 @@ complytime-providers/
 │   └── ampel-provider/        # Binary: complyctl-provider-ampel
 │       ├── config/            #   Configuration handling
 │       ├── convert/           #   Format conversion & types
+│       ├── export/            #   OTLP evidence export
 │       ├── intoto/            #   in-toto attestation handling
 │       ├── results/           #   Results processing
 │       ├── scan/              #   Scan orchestration
@@ -91,7 +95,7 @@ complytime-providers/
 - **Framework**: Go stdlib `testing` + `github.com/stretchr/testify`
   (assert/require)
 - **Naming**: `TestFunctionName_Description` pattern
-- **Coverage**: 14 test files across all subpackages (every non-type
+- **Coverage**: 18 test files across all subpackages (every non-type
   package has a corresponding `_test.go`)
 - **Test data**: XML fixtures stored in
   `internal/complytime/testdata/openscap/`
