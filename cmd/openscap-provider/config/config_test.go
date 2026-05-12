@@ -164,7 +164,7 @@ func TestEnsureDirectories(t *testing.T) {
 	originalDir, err := os.Getwd()
 	require.NoError(t, err)
 	require.NoError(t, os.Chdir(tempDir))
-	t.Cleanup(func() { os.Chdir(originalDir) })
+	t.Cleanup(func() { _ = os.Chdir(originalDir) })
 
 	require.NoError(t, EnsureDirectories())
 

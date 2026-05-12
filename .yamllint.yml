@@ -1,6 +1,9 @@
 ---
 extends: default
 
+ignore:
+  - vendor/
+
 # https://yamllint.readthedocs.io/en/stable/rules.html
 rules:
   comments: disable
