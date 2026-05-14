@@ -10,8 +10,8 @@ import (
 
 	"github.com/hashicorp/go-hclog"
 
-	xccdf "github.com/complytime/complytime-providers/cmd/openscap-provider/xccdftype"
 	"github.com/complytime/complyctl/pkg/provider"
+	xccdf "github.com/complytime/complytime-providers/cmd/openscap-provider/xccdftype"
 )
 
 const (

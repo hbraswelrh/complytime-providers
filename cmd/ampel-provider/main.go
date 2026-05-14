@@ -3,8 +3,8 @@
 package main
 
 import (
-	"github.com/complytime/complytime-providers/cmd/ampel-provider/server"
 	"github.com/complytime/complyctl/pkg/provider"
+	"github.com/complytime/complytime-providers/cmd/ampel-provider/server"
 )
 
 func main() {
