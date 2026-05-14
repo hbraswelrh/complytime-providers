@@ -3,8 +3,8 @@
 package main
 
 import (
-	"github.com/complytime/complytime-providers/cmd/openscap-provider/server"
 	"github.com/complytime/complyctl/pkg/provider"
+	"github.com/complytime/complytime-providers/cmd/openscap-provider/server"
 )
 
 func main() {
