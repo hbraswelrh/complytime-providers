@@ -3,31 +3,27 @@
 package server
 
 import (
-	"bufio"
 	"context"
 	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
-	"regexp"
-	"strings"
 
 	"github.com/antchfx/xmlquery"
 	"github.com/hashicorp/go-hclog"
 
+	"github.com/complytime/complyctl/pkg/provider"
 	"github.com/complytime/complytime-providers/cmd/openscap-provider/config"
+	oscapexport "github.com/complytime/complytime-providers/cmd/openscap-provider/export"
 	"github.com/complytime/complytime-providers/cmd/openscap-provider/oscap"
 	"github.com/complytime/complytime-providers/cmd/openscap-provider/scan"
 	"github.com/complytime/complytime-providers/cmd/openscap-provider/xccdf"
-	"github.com/complytime/complyctl/pkg/provider"
 )
 
 var (
-	_         provider.Provider = (*ProviderServer)(nil)
-	ovalRegex               = regexp.MustCompile(`^[^:]*?:[^-]*?-(.*?):.*?$`)
+	_ provider.Provider = (*ProviderServer)(nil)
+	_ provider.Exporter = (*ProviderServer)(nil)
 )
-
-const ovalCheckType = "http://oval.mitre.org/XMLSchema/oval-definitions-5"
 
 type ProviderServer struct{}
 
@@ -40,6 +36,7 @@ func (s *ProviderServer) Describe(_ context.Context, _ *provider.DescribeRequest
 		Healthy:                 true,
 		Version:                 "0.1.0",
 		RequiredTargetVariables: []string{"profile"},
+		SupportsExport:          true,
 	}, nil
 }
 
@@ -150,21 +147,7 @@ func runScanAndParseARF(ctx context.Context, vars map[string]string) (*xmlquery.
 		return nil, fmt.Errorf("scan failed: %w", err)
 	}
 
-	return parseARFFile(config.ARFPath)
-}
-
-func parseARFFile(arfPath string) (*xmlquery.Node, error) {
-	file, err := os.Open(filepath.Clean(arfPath))
-	if err != nil {
-		return nil, fmt.Errorf("failed to open ARF: %w", err)
-	}
-	defer file.Close()
-
-	xmlnode, err := xmlquery.Parse(bufio.NewReader(file))
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse ARF: %w", err)
-	}
-	return xmlnode, nil
+	return xccdf.ParseARFFile(config.ARFPath)
 }
 
 func buildAssessmentsFromARF(xmlnode *xmlquery.Node) ([]provider.AssessmentLog, error) {
@@ -205,7 +188,7 @@ func resolveRuleResult(result *xmlquery.Node, ruleTable map[string]*xmlquery.Nod
 		return "", nil, "", true
 	}
 	resultText := resultEl.InnerText()
-	if isSkippableResult(resultText) {
+	if xccdf.IsSkippableResult(resultText) {
 		return "", nil, "", true
 	}
 
@@ -217,17 +200,13 @@ func resolveRuleResult(result *xmlquery.Node, ruleTable map[string]*xmlquery.Nod
 	return ruleIDRef, rule, resultText, false
 }
 
-func isSkippableResult(resultText string) bool {
-	return resultText == "notselected" || resultText == "notapplicable"
-}
-
 func buildAssessmentLog(rule, result *xmlquery.Node, ruleIDRef, resultText, target string) (provider.AssessmentLog, bool, error) {
-	ovalRefEl := findOVALCheckContentRef(rule)
+	ovalRefEl := xccdf.FindOVALCheckContentRef(rule)
 	if ovalRefEl == nil {
 		return provider.AssessmentLog{}, true, nil
 	}
 
-	requirementID, err := parseCheck(ovalRefEl)
+	requirementID, err := xccdf.ParseCheck(ovalRefEl)
 	if err != nil {
 		return provider.AssessmentLog{}, false, err
 	}
@@ -243,21 +222,12 @@ func buildAssessmentLog(rule, result *xmlquery.Node, ruleIDRef, resultText, targ
 			{
 				Name:    ruleIDRef,
 				Result:  mappedResult,
-				Message: ruleResultMessage(rule, result, resultText),
+				Message: xccdf.RuleResultMessage(rule, result, resultText),
 			},
 		},
 		Message:    fmt.Sprintf("Host %s evaluated", target),
 		Confidence: provider.ConfidenceLevelHigh,
 	}, false, nil
-}
-
-func findOVALCheckContentRef(rule *xmlquery.Node) *xmlquery.Node {
-	for _, check := range rule.SelectElements("//xccdf-1.2:check") {
-		if check.SelectAttr("system") == ovalCheckType {
-			return check.SelectElement("xccdf-1.2:check-content-ref")
-		}
-	}
-	return nil
 }
 
 // mergeVariables combines global and target variable maps into a single
@@ -273,47 +243,72 @@ func mergeVariables(global, target map[string]string) map[string]string {
 	return merged
 }
 
-func parseCheck(check *xmlquery.Node) (string, error) {
-	ovalCheckName := strings.TrimSpace(check.SelectAttr("name"))
-	if ovalCheckName == "" {
-		return "", errors.New("check-content-ref node has no 'name' attribute")
-	}
-	matches := ovalRegex.FindStringSubmatch(ovalCheckName)
+// Export reads scan results from the ARF XML file and emits them as
+// GemaraEvidence OTLP log records to the configured Beacon collector via ProofWatch.
+func (s *ProviderServer) Export(ctx context.Context, req *provider.ExportRequest) (*provider.ExportResponse, error) {
+	logger := hclog.Default()
 
-	minimumPart, shortNameLoc := 2, 1
-	if len(matches) < minimumPart {
-		return "", fmt.Errorf("check id %q is in unexpected format", ovalCheckName)
-	}
-	return matches[shortNameLoc], nil
-}
-
-// ruleResultMessage builds a human-readable step message from the XCCDF
-// Rule definition and rule-result node. Prefers the rule title over the
-// raw ID, and appends any diagnostic messages OpenSCAP emitted.
-func ruleResultMessage(rule *xmlquery.Node, result *xmlquery.Node, resultText string) string {
-	title := ""
-	if el := rule.SelectElement("xccdf-1.2:title"); el != nil {
-		title = strings.TrimSpace(el.InnerText())
+	if _, err := os.Stat(config.ARFPath); os.IsNotExist(err) {
+		return &provider.ExportResponse{
+			Success:      false,
+			ErrorMessage: "no scan results available for export: ARF file not found at " + config.ARFPath,
+		}, nil
 	}
 
-	var parts []string
-	for _, msg := range result.SelectElements("message") {
-		if t := strings.TrimSpace(msg.InnerText()); t != "" {
-			parts = append(parts, t)
+	evidence, err := oscapexport.ReadAndConvert(config.ARFPath)
+	if err != nil {
+		return &provider.ExportResponse{
+			Success:      false,
+			ErrorMessage: fmt.Sprintf("reading scan results: %v", err),
+		}, nil
+	}
+
+	if len(evidence) == 0 {
+		logger.Info("no scan results to export")
+		return &provider.ExportResponse{
+			Success:       true,
+			ExportedCount: 0,
+			FailedCount:   0,
+		}, nil
+	}
+
+	emitter, err := oscapexport.NewEmitter(ctx, req.Collector)
+	if err != nil {
+		return &provider.ExportResponse{
+			Success:      false,
+			ErrorMessage: fmt.Sprintf("initializing export: %v", err),
+		}, nil
+	}
+	defer func() {
+		if shutdownErr := emitter.Shutdown(); shutdownErr != nil {
+			logger.Error("failed to shutdown emitter", "error", shutdownErr)
+		}
+	}()
+
+	var exported, failed int32
+	for _, ev := range evidence {
+		if logErr := emitter.PW.Log(ctx, ev); logErr != nil {
+			logger.Error("failed to emit evidence", "assessment_id", ev.Metadata.Id, "error", logErr)
+			failed++
+		} else {
+			exported++
 		}
 	}
-	diagnostic := strings.Join(parts, "; ")
 
-	if title != "" && diagnostic != "" {
-		return fmt.Sprintf("%s — %s (%s)", title, diagnostic, resultText)
+	logger.Info("export complete", "exported", exported, "failed", failed)
+	return &provider.ExportResponse{
+		Success:       failed == 0,
+		ExportedCount: exported,
+		FailedCount:   failed,
+		ErrorMessage:  exportErrorMessage(failed),
+	}, nil
+}
+
+func exportErrorMessage(failed int32) string {
+	if failed == 0 {
+		return ""
 	}
-	if title != "" {
-		return fmt.Sprintf("%s (%s)", title, resultText)
-	}
-	if diagnostic != "" {
-		return fmt.Sprintf("%s (%s)", diagnostic, resultText)
-	}
-	return fmt.Sprintf("openscap rule-result is %s", resultText)
+	return fmt.Sprintf("%d evidence records failed to export", failed)
 }
 
 func mapResultStatus(resultText string) (provider.Result, error) {
