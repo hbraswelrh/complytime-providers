@@ -168,9 +168,10 @@ func WritePerTargetResult(result *PerTargetResult, dir string) error {
 // Findings are grouped by requirement ID into AssessmentLog entries. Each
 // target/branch scan becomes a Step within the assessment.
 //
-// TODO: Once complyctl#510 merges, operational errors (failed clones, bundle
-// pull failures, write errors) should be placed into resp.Errors instead of
-// synthetic "scan-error" assessment entries.
+// TODO(#21): complyctl#510 has merged — operational errors (failed clones,
+// bundle pull failures, write errors) should be placed into resp.Errors
+// instead of synthetic "scan-error" assessment entries. Requires updating
+// the complyctl dependency to pick up the new ScanResponse.Errors field.
 func ToScanResponse(targetResults []*PerTargetResult) *provider.ScanResponse {
 	type reqGroup struct {
 		requirementID string
