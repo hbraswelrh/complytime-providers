@@ -166,11 +166,9 @@ func WritePerTargetResult(result *PerTargetResult, dir string) error {
 
 // ToScanResponse maps a slice of PerTargetResults to a provider.ScanResponse.
 // Findings are grouped by requirement ID into AssessmentLog entries. Each
-// target/branch scan becomes a Step within the assessment.
-//
-// TODO: Once complyctl#510 merges, operational errors (failed clones, bundle
-// pull failures, write errors) should be placed into resp.Errors instead of
-// synthetic "scan-error" assessment entries.
+// target/branch scan becomes a Step within the assessment. Operational errors
+// (failed clones, bundle pull failures) are reported via ScanResponse.Errors
+// so complyctl can distinguish coverage gaps from policy evaluation results.
 func ToScanResponse(targetResults []*PerTargetResult) *provider.ScanResponse {
 	type reqGroup struct {
 		requirementID string
@@ -181,6 +179,7 @@ func ToScanResponse(targetResults []*PerTargetResult) *provider.ScanResponse {
 
 	groups := make(map[string]*reqGroup)
 	var order []string
+	var opErrors []string
 
 	for _, tr := range targetResults {
 		stepName := tr.Target
@@ -208,19 +207,7 @@ func ToScanResponse(targetResults []*PerTargetResult) *provider.ScanResponse {
 		}
 
 		if tr.Status == "error" && len(tr.Findings) == 0 {
-			const errorReqID = "scan-error"
-			g, ok := groups[errorReqID]
-			if !ok {
-				g = &reqGroup{requirementID: errorReqID}
-				groups[errorReqID] = g
-				order = append(order, errorReqID)
-			}
-			g.steps = append(g.steps, provider.Step{
-				Name:    stepName,
-				Result:  provider.ResultError,
-				Message: tr.Error,
-			})
-			g.totalCount++
+			opErrors = append(opErrors, fmt.Sprintf("target '%s': %s", stepName, tr.Error))
 		}
 	}
 
@@ -247,7 +234,7 @@ func ToScanResponse(targetResults []*PerTargetResult) *provider.ScanResponse {
 		})
 	}
 
-	return &provider.ScanResponse{Assessments: assessments}
+	return &provider.ScanResponse{Assessments: assessments, Errors: opErrors}
 }
 
 // ScanStatusAssessment returns a synthetic AssessmentLog reporting overall

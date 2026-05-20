@@ -233,10 +233,10 @@ func TestToScanResponse_ErrorTargets(t *testing.T) {
 	}
 
 	resp := ToScanResponse(results)
-	require.Len(t, resp.Assessments, 1)
-	assert.Equal(t, "scan-error", resp.Assessments[0].RequirementID)
-	require.Len(t, resp.Assessments[0].Steps, 1)
-	assert.Equal(t, provider.ResultError, resp.Assessments[0].Steps[0].Result)
+	assert.Empty(t, resp.Assessments)
+	require.Len(t, resp.Errors, 1)
+	assert.Contains(t, resp.Errors[0], "org/repo@main")
+	assert.Contains(t, resp.Errors[0], "clone failed")
 }
 
 func TestToScanResponse_DeterministicOrder(t *testing.T) {

@@ -130,7 +130,11 @@ func (s *ProviderServer) Scan(
 		[]provider.AssessmentLog{scanStatus}, resp.Assessments...,
 	)
 
-	return resp, aggregatedErr
+	if aggregatedErr != nil {
+		resp.Errors = append(resp.Errors, aggregatedErr.Error())
+	}
+
+	return resp, nil
 }
 
 func (s *ProviderServer) processTarget(
