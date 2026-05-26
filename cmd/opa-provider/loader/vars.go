@@ -10,5 +10,6 @@ const (
 	VarBranches     = "branches"
 	VarAccessToken  = "access_token"
 	VarScanPath     = "scan_path"
+	VarPlatform     = "platform"
 	VarOPABundleRef = "opa_bundle_ref"
 )

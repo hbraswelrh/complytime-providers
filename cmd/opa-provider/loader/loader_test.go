@@ -195,6 +195,36 @@ func TestGitLoader_Load_WithToken_GitLab(t *testing.T) {
 	}
 }
 
+func TestGitLoader_Load_WithToken_PlatformHint(t *testing.T) {
+	runner := &mockRunner{response: []byte("Cloning...")}
+	loader := GitLoader{Runner: runner}
+	workDir := t.TempDir()
+
+	// Self-hosted GitLab uses platform hint for correct credential username.
+	target := provider.Target{
+		Variables: map[string]string{
+			"url":          "https://git.internal.io/org/repo",
+			"branch":       "main",
+			"access_token": "glpat_secret",
+			"platform":     "gitlab",
+		},
+	}
+
+	_, err := loader.Load(target, workDir)
+	require.NoError(t, err)
+
+	require.Len(t, runner.calls, 1)
+	call := runner.calls[0]
+
+	for _, e := range call.env {
+		if len(e) > len("GIT_CONFIG_VALUE_0=") &&
+			e[:len("GIT_CONFIG_VALUE_0=")] == "GIT_CONFIG_VALUE_0=" {
+			assert.Contains(t, e, "oauth2",
+				"self-hosted GitLab with platform hint should use oauth2")
+		}
+	}
+}
+
 func TestGitLoader_Load_WithScanPath(t *testing.T) {
 	runner := &mockRunner{response: []byte("Cloning...")}
 	loader := GitLoader{Runner: runner}
@@ -211,6 +241,32 @@ func TestGitLoader_Load_WithScanPath(t *testing.T) {
 	path, err := loader.Load(target, workDir)
 	require.NoError(t, err)
 	assert.Contains(t, path, filepath.Join("configs", "k8s"))
+}
+
+func TestGitLoader_Load_CleansExistingCloneDir(t *testing.T) {
+	runner := &mockRunner{response: []byte("Cloning...")}
+	loader := GitLoader{Runner: runner}
+	workDir := t.TempDir()
+
+	target := provider.Target{
+		Variables: map[string]string{
+			"url":    "https://github.com/org/repo",
+			"branch": "main",
+		},
+	}
+
+	// First clone succeeds.
+	path, err := loader.Load(target, workDir)
+	require.NoError(t, err)
+
+	// Simulate leftover clone directory from first scan.
+	require.NoError(t, os.MkdirAll(path, 0750))
+	require.NoError(t, os.WriteFile(filepath.Join(path, "leftover.txt"), []byte("old"), 0600))
+
+	// Second clone should succeed because the old directory is cleaned up.
+	_, err = loader.Load(target, workDir)
+	require.NoError(t, err, "re-scanning same repo+branch should succeed")
+	assert.Len(t, runner.calls, 2, "should have two clone calls")
 }
 
 func TestGitLoader_Load_CloneFailure(t *testing.T) {

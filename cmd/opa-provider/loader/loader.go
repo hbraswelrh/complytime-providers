@@ -23,23 +23,19 @@ type DataLoader interface {
 type LocalPathLoader struct{}
 
 // Load validates and returns the local input path from target variables.
-// The path is cleaned with filepath.Clean to normalize traversal sequences.
+// Validation is delegated to targets.ValidateInputPath which checks for
+// directory traversal and path existence.
 func (l LocalPathLoader) Load(target provider.Target, _ string) (string, error) {
 	inputPath := target.Variables[VarInputPath]
 	if inputPath == "" {
 		return "", fmt.Errorf("input_path variable is required but empty")
 	}
 
-	cleanPath := filepath.Clean(inputPath)
-	if strings.Contains(cleanPath, "..") {
-		return "", fmt.Errorf("input path %q contains directory traversal", inputPath)
+	if err := targets.ValidateInputPath(inputPath); err != nil {
+		return "", err
 	}
 
-	if _, err := os.Stat(cleanPath); err != nil {
-		return "", fmt.Errorf("input path %q: %w", inputPath, err)
-	}
-
-	return cleanPath, nil
+	return filepath.Clean(inputPath), nil
 }
 
 // GitLoader clones a git repository and returns the path to scan.
@@ -60,14 +56,19 @@ func (g GitLoader) Load(target provider.Target, workDir string) (string, error) 
 	}
 
 	cloneDir := filepath.Join(workDir, targets.SanitizeRepoURL(repoURL), branch)
+
+	// Remove any existing clone directory so re-scans of the same
+	// repo+branch succeed (git clone refuses non-empty directories).
+	if err := os.RemoveAll(cloneDir); err != nil {
+		return "", fmt.Errorf("removing existing clone directory %q: %w", cloneDir, err)
+	}
+
 	args := []string{"clone", "--branch", branch, "--depth", "1", repoURL, cloneDir}
 
 	var err error
 	if accessToken != "" {
-		username := "x-access-token"
-		if strings.Contains(strings.ToLower(repoURL), "gitlab") {
-			username = "oauth2"
-		}
+		platformHint := target.Variables[VarPlatform]
+		username := credentialUsername(repoURL, platformHint)
 		env := buildCredentialHelperEnv(username, accessToken)
 		_, err = g.Runner.RunWithEnv(env, "git", args...)
 	} else {
@@ -112,6 +113,18 @@ func (r *Router) Load(target provider.Target, workDir string) (string, error) {
 		return r.local.Load(target, workDir)
 	}
 	return "", fmt.Errorf("target must specify url or input_path")
+}
+
+// credentialUsername determines the git credential username based on the
+// hosting platform. GitLab uses "oauth2"; all others use "x-access-token".
+// Platform is detected via targets.ParseRepoURL hostname matching with an
+// optional platformHint for self-hosted instances.
+func credentialUsername(repoURL, platformHint string) string {
+	platform, _, _, err := targets.ParseRepoURL(repoURL, platformHint)
+	if err == nil && platform == "gitlab" {
+		return "oauth2"
+	}
+	return "x-access-token"
 }
 
 // buildCredentialHelperEnv creates a copy of the current environment with
