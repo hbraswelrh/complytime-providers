@@ -5,6 +5,7 @@ package scan
 import (
 	"fmt"
 	"os/exec"
+	"strings"
 )
 
 // CommandRunner abstracts command execution for testing.
@@ -52,7 +53,7 @@ func EvalPolicy(inputPath, policyDir string, runner CommandRunner) ([]byte, erro
 func constructConftestPullCommand(bundleRef, policyDir string) (string, []string) {
 	return "conftest", []string{
 		"pull",
-		"oci://" + bundleRef,
+		"oci://" + strings.TrimPrefix(bundleRef, "oci://"),
 		"--policy", policyDir,
 	}
 }

@@ -87,6 +87,20 @@ func TestEvalPolicy_Success(t *testing.T) {
 	assert.Equal(t, "conftest", runner.calls[0].name)
 }
 
+func TestConstructConftestPullCommand_WithOCIPrefix(t *testing.T) {
+	name, args := constructConftestPullCommand(
+		"oci://ghcr.io/org/bundle:dev", "/tmp/policy",
+	)
+	assert.Equal(t, "conftest", name)
+	assert.Contains(t, args, "oci://ghcr.io/org/bundle:dev")
+
+	// Verify no double oci:// prefix.
+	for _, arg := range args {
+		assert.NotContains(t, arg, "oci://oci://",
+			"should not double-prepend oci:// prefix")
+	}
+}
+
 func TestEvalPolicy_Failure(t *testing.T) {
 	runner := &mockRunner{
 		response: []byte("error"),
