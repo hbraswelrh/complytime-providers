@@ -7,7 +7,8 @@ gRPC plugin interface (hashicorp/go-plugin) with three core RPCs
 for shipping compliance evidence to an OTLP collector.
 
 - **Type**: Multi-binary Go plugin repository
-- **Binaries**: `complyctl-provider-openscap`, `complyctl-provider-ampel`
+- **Binaries**: `complyctl-provider-openscap`, `complyctl-provider-ampel`,
+  `complyctl-provider-opa`
 - **License**: Apache-2.0
 - **Go version**: 1.25.0
 - **Key dependencies**: complyctl (plugin framework), hashicorp/go-plugin,
@@ -56,15 +57,23 @@ complytime-providers/
 │   │   ├── server/            #   gRPC provider implementation
 │   │   ├── xccdf/             #   XCCDF datastream & tailoring
 │   │   └── xccdftype/         #   XCCDF type definitions
-│   └── ampel-provider/        # Binary: complyctl-provider-ampel
+│   ├── ampel-provider/        # Binary: complyctl-provider-ampel
+│   │   ├── config/            #   Configuration handling
+│   │   ├── convert/           #   Format conversion & types
+│   │   ├── export/            #   OTLP evidence export
+│   │   ├── intoto/            #   in-toto attestation handling
+│   │   ├── results/           #   Results processing
+│   │   ├── scan/              #   Scan orchestration
+│   │   ├── server/            #   gRPC provider implementation
+│   │   ├── targets/           #   Target resolution
+│   │   └── toolcheck/         #   Tool availability checking
+│   └── opa-provider/          # Binary: complyctl-provider-opa
 │       ├── config/            #   Configuration handling
-│       ├── convert/           #   Format conversion & types
-│       ├── export/            #   OTLP evidence export
-│       ├── intoto/            #   in-toto attestation handling
-│       ├── results/           #   Results processing
-│       ├── scan/              #   Scan orchestration
+│       ├── loader/            #   Data loading (git clone, local path)
+│       ├── results/           #   Conftest result parsing & mapping
+│       ├── scan/              #   Conftest command execution
 │       ├── server/            #   gRPC provider implementation
-│       ├── targets/           #   Target resolution
+│       ├── targets/           #   Target resolution & URL parsing
 │       └── toolcheck/         #   Tool availability checking
 ├── internal/
 │   └── complytime/
